@@ -38,14 +38,14 @@ namespace StephensP1 {
             }
         }
 
-        //  static void WriteFile(Sport Lawrence, string path)
+        //  static void WriteFile(Sport currSport, string path)
         // {
         //     // display/confirm the object
-        //     Console.WriteLine(Lawrence.ToString());
+        //     Console.WriteLine(currSport.ToString());
 
         //     // save to a file as text
         //     Console.WriteLine("Writing to file...");
-        //     string[] text = {Lawrence.ToString()};
+        //     string[] text = {currSport.ToString()};
 
         //     if( File.Exists(path))
         //     {
