@@ -1,8 +1,11 @@
 using StephensP1;
 using System.IO;
+using System.Text;
+using System.Collections.Generic;
 
 namespace StephensP1.Test;
 
+//Here I am making sure that the files don't exist before the program runs for the first time
 public class UnitTest1
 {
     [Fact]
@@ -30,12 +33,22 @@ public class UnitTest1
         string path1 = @".\Football.txt";
         string path2 = @".\Baseball.txt";
         string userOption = "0";
-        List<Football> tempFootList = new List<Football>();
-        List<Basketball> tempBasketList = new List<Basketball>();
-        List<Baseball> tempBaseList = new List<Baseball>();
+        string[] args = {" "};
 
         //logic to run my program and exit it, will need to enter a 0 when the menu pops up
+        using(var consoleInput = new StringReader(userOption) )
+        {
+          Console.SetIn(consoleInput);
 
+          var writer = new StringWriter();
+          Console.SetOut(writer);
+
+          // Program.SportsMenu(tempBasketList, tempFootList, tempBaseList);
+          Program.Main(args);
+
+          var output = writer.ToString();
+        }
+      
   
       bool basketballFileExists = File.Exists(path);
       bool footballFileExists = File.Exists(path1);
@@ -48,89 +61,30 @@ public class UnitTest1
       
     }
 
-   //below are tests I wasn't able to implement
+   
+    //When running this test case, it stops and says System.OutofMemoryException: Insufficient memory to continue the 
+    //execution of the program;  I couldn't figure out what was causing it and how to fix it, so it's commented out.
 
     // [Fact]
     // public void SportsMenuChoiceParameterCheck()
     // {
-    // string userOption = "9";
-    // List<Football> tempFootList = new List<Football>();
-    // List<Basketball> tempBasketList = new List<Basketball>();
-    // List<Baseball> tempBaseList = new List<Baseball>();
+    //     string invalidMenuOption = "4";
+    //     string[] args = {" "};
+    //     string expectedOutput = "Please Enter one of the options!";
 
+    //     //logic to run my program and exit it, will need to enter a 0 when the menu pops up
+    //     using(var consoleInput = new StringReader(invalidMenuOption) )
+    //     {
+    //       Console.SetIn(consoleInput);
+
+    //       var writer = new StringWriter();
+    //       Console.SetOut(writer);
+
+    //       Program.Main(args);
+
+    //       var output = writer.ToString();
+
+    //       Assert.Equals(expectedOutput, output);
+    //     }
     // }
-
-    // //here I want to make sure when I do navigate to the Basketball menu and input 1 for which team it prints the right stuff
-    // [Fact]
-    // public void LakersInfoDisplayed()
-    // {
-    //     //Arrange - expected 
-    //     string lakerInfo = "sflsjfklsfjskljlf";
-         
-         //can be used for both menus
-        // string userOption = "1";
-       // List<Football> tempFootList = new List<Football>();
-      // List<Basketball> tempBasketList = new List<Basketball>();
-     // List<Baseball> tempBaseList = new List<Baseball>();
-    //     //Act - running the method
-         
-    //     //Assert - compare what actuall happened 
-    //     Assert.Equal()
-    // }
-
-    // [Fact]
-    // public void PatriotsInfoDisplayed ()
-    // {
-         // string userOption = "9";
-    // List<Football> tempFootList = new List<Football>();
-    // List<Basketball> tempBasketList = new List<Basketball>();
-    // List<Baseball> tempBaseList = new List<Baseball>();
-
-    // }
-
-    // [Fact]
-    // public void YankeesInfoDisplayed()
-    // {
-    // string userOption = "9";
-    // List<Football> tempFootList = new List<Football>();
-    // List<Basketball> tempBasketList = new List<Basketball>();
-    // List<Baseball> tempBaseList = new List<Baseball>();
-    // }
-
-    // [Fact]
-    // public void BullsAndWarriorsWinsCompared()
-    // {
-    // string userOption = "9";
-    // List<Football> tempFootList = new List<Football>();
-    // List<Basketball> tempBasketList = new List<Basketball>();
-    // List<Baseball> tempBaseList = new List<Baseball>();
-    // }
-
-    // [Fact]
-    // public void LakersAndSpursWinsCompared()
-    // {
-        // string userOption = "9";
-    // List<Football> tempFootList = new List<Football>();
-    // List<Basketball> tempBasketList = new List<Basketball>();
-    // List<Baseball> tempBaseList = new List<Baseball>();
-    // }
-
-    // [Fact]
-    // public void PackersAndBearsWinsCompared()
-    // {
-      // string userOption = "9";
-    // List<Football> tempFootList = new List<Football>();
-    // List<Basketball> tempBasketList = new List<Basketball>();
-    // List<Baseball> tempBaseList = new List<Baseball>();
-    // }
-
-    // [Fact]
-    // public void AthleticsAndGiantsWinsCompared()
-    // {
-      // string userOption = "9";
-    // List<Football> tempFootList = new List<Football>();
-    // List<Basketball> tempBasketList = new List<Basketball>();
-    // List<Baseball> tempBaseList = new List<Baseball>();
-    // }
- 
 }

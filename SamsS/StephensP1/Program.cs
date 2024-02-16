@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace StephensP1
 {
-    class Program 
+    public class Program 
     {
         public static XmlSerializer basketSerializer = new XmlSerializer(typeof(List<Basketball>));
         public static XmlSerializer footSerializer = new XmlSerializer(typeof(List<Football>));
@@ -24,12 +24,15 @@ namespace StephensP1
             string path1 = @".\Baseball.txt";
             string path2 = @".\Football.txt";
 
+            //lists to hold the teams of our respective sports
             List<Basketball> basketballTeams = new List<Basketball>();
             List<Football> fballTeams = new List<Football>();
             List<Baseball> baballTeams = new List<Baseball>();
 
             if(File.Exists(path0) && File.Exists(path1) && File.Exists(path2))
             {
+                //Lines 35-96: After checking to make sure that file(s) exist first, go through Reads from the file
+                //at the past in path, Deserializes the data from it, and then populate the sports list(s)
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Basketball>));
                 if (!File.Exists(path0))
                 {
@@ -51,7 +54,7 @@ namespace StephensP1
                     }
                 }
                 
-               serializer = new XmlSerializer(typeof(List<Football>));
+            serializer = new XmlSerializer(typeof(List<Football>));
             if (!File.Exists(path2))
             {
                 Console.WriteLine("File Not Found");
@@ -71,9 +74,8 @@ namespace StephensP1
                     fballTeams = record;
                 }
             }
-
             
-             serializer = new XmlSerializer(typeof(List<Baseball>));
+            serializer = new XmlSerializer(typeof(List<Baseball>));
             if (!File.Exists(path1))
             {
                 Console.WriteLine("File Not Found");
@@ -93,20 +95,11 @@ namespace StephensP1
                     baballTeams = record;
                 }
             }
-                
-
-                // Basketball basketball = new Basketball();
-                // basketball.ReloadRosters(path0);
-
-                // Baseball baseball = new Baseball();
-                // baseball.ReloadRosters(path1);
-
-                // Football football = new Football();
-                // football.ReloadRosters(path2);
-
-                //change to have lists based on how you can do Football.list
+         
                 SportsMenu(basketballTeams, fballTeams, baballTeams);
 
+                //Lines 101-123: RE-Serializes the list(s) and then Writes to the respective lists 
+                //indicated by the "path"
                 var stringWriter = new StringWriter();
                 basketSerializer.Serialize(stringWriter, basketballTeams);
 
@@ -130,17 +123,11 @@ namespace StephensP1
                 text1 =  stringWriter.ToString();
 
                 File.WriteAllText(path2, text1);
-       
-
-                    //Serialize data and write to files
-                    // basketball.SerializeData(path0);
-                    // baseball.SerializeData(path1);
-                    // football.SerializeData(path2);
             }
             else
             {
 
-             //Football Team creations
+                //Football Team creations
                 Football football = new Football("New England Patriots",1959,541,433, 6);
                 Football steelers = new Football("Pittsburgh Steelers",1933, 671, 578, 6);
                 Football packers = new Football("Green Bay Packers",1919, 799, 598, 13);
@@ -183,8 +170,9 @@ namespace StephensP1
                 baseball.AddNewTeam(redSox);
 
                 SportsMenu(basketballTeams, Football.footballTeams, Baseball.baseballTeams);
-                // SportsMenu(basketballTeams, fballTeams, baballTeams);
-
+                
+                //Lines 174-196: Serialize the list(s) and then Writes to the respective lists 
+                //indicated by the "path"
                 var stringWriter = new StringWriter();
                 basketSerializer.Serialize(stringWriter, basketballTeams);
 
@@ -208,13 +196,6 @@ namespace StephensP1
                 text1 =  stringWriter.ToString();
 
                 File.WriteAllText(path2, text1); 
-
-               
-
-            //Serialize data and write to files
-            // basketball.SerializeData(path0);
-            // baseball.SerializeData(path1);
-            // football.SerializeData(path2);
             }
         }
 
@@ -262,7 +243,8 @@ namespace StephensP1
             }
         }
 
-         public static void BasketballMenu(List<Basketball> bBall) {
+        public static void BasketballMenu(List<Basketball> bBall) 
+        {
            
             bool loop = true;
             while(loop)
@@ -306,13 +288,13 @@ namespace StephensP1
             }
         }
 
-         public static void FootballMenu(Football fball) {
+        public static void FootballMenu(Football fball)
+        {
             bool loop = true;
             while(loop)
             {
                 Console.WriteLine("Please select an Team:");
                 Console.WriteLine("1: New England Patriots");
-                //Console.WriteLine("1: Print Teams Information");
                 Console.WriteLine("2: Pittsburgh Steelers");
                 Console.WriteLine("3: Green Bay Packers");
                 Console.WriteLine("4: Chicago Bears");
@@ -330,10 +312,6 @@ namespace StephensP1
                     case "1": // if (choice == "1")
                         fball.DisplayTeamInfo(0);
                         break;
-
-                    //  case "1": // if (choice == "1")
-                    //     Sport.ReadFile(path);
-                    //     break;
 
                     case "2":
                         fball.DisplayTeamInfo(1);
@@ -367,15 +345,13 @@ namespace StephensP1
             }
         }
 
-         public static void BaseballMenu(Baseball baBall) {
+        public static void BaseballMenu(Baseball baBall) 
+        {
             bool loop = true;
-
-           
             while(loop)
             {
                 Console.WriteLine("Please select an Team:");
                 Console.WriteLine("1: New York Yankees");
-                //Console.WriteLine("1: Print Teams Information");
                 Console.WriteLine("2: St Louis Cardinals");
                 Console.WriteLine("3: Oakland Athletics");
                 Console.WriteLine("4: San Francisco Giants");
@@ -394,10 +370,6 @@ namespace StephensP1
                         baBall.DisplayTeamInfo(0);
                         break;
 
-                    //  case "1": // if (choice == "1")
-                    //     Sport.ReadFile(path);
-                    //     break;
-
                     case "2":
                         baBall.DisplayTeamInfo(1);
                         break;
@@ -415,7 +387,6 @@ namespace StephensP1
                         break;
 
                     case "6":
-                    //for this and football do like list item 0 because that is a single instance which will allow them to still work like that
                         BaseballWinComparisonMenu(baBall);
                         break;
 
@@ -431,8 +402,9 @@ namespace StephensP1
             }
         }
 
-        public static void FootballWinComparisonMenu(Football fBall) {
-                bool loop = true;
+        public static void FootballWinComparisonMenu(Football fBall) 
+        {
+            bool loop = true;
             while(loop)
             {
                 Console.WriteLine(@"1 - New England Patriots 2 - Pittsburgh Steelers 3 - Green Bay Packers
@@ -510,10 +482,9 @@ namespace StephensP1
             }
         }
 
-        //don't know if it will look pretty but don't even call compare just put the logic under
-        //and then maybe add a comment in the code and possibly mention it in your presentation
-        public static void BasketballWinComparisonMenu(List<Basketball> bBall) {
-                bool loop = true;
+        public static void BasketballWinComparisonMenu(List<Basketball> bBall) 
+        {
+            bool loop = true;
             while(loop)
             {
                 Console.WriteLine(@"1 - Los Angeles Lakers 2 - Boston Celtics 3 - San Antonio Spurs
@@ -539,7 +510,7 @@ namespace StephensP1
 
                 switch(choice)
                 {
-                   case "1": // if (choice == "1")
+                   case "1": 
                         Basketball.CompareBasketballWins(bBall[0], bBall[1]);
                         break;
 
@@ -591,7 +562,8 @@ namespace StephensP1
             }
         }
 
-        public static void BaseballWinComparisonMenu(Baseball baBall) {
+        public static void BaseballWinComparisonMenu(Baseball baBall)
+        {
             bool loop = true;
             while(loop)
             {
@@ -618,7 +590,7 @@ namespace StephensP1
 
                 switch(choice)
                 {
-                    case "1": // if (choice == "1")
+                    case "1": 
                         baBall.CompareWins(0, 1);
                         break;
 
